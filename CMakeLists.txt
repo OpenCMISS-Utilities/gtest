@@ -279,4 +279,9 @@ set(gtest_internal_hdrs
 install(TARGETS gtest gtest_main ARCHIVE DESTINATION lib/)
 install(FILES ${gtest_public_hdrs} DESTINATION include/gtest)
 install(FILES ${gtest_internal_hdrs} DESTINATION include/gtest/internal)
+install(DIRECTORY ${PROJECT_BINARY_DIR}/Debug/
+  DESTINATION lib
+  FILES_MATCHING
+  PATTERN *.pdb)
+
 

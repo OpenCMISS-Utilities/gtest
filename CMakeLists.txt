@@ -276,7 +276,7 @@ set(gtest_internal_hdrs
   include/gtest/internal/gtest-tuple.h
   include/gtest/internal/gtest-type-util.h)
 
-install(TARGETS gtest gtest_main ARCHIVE DESTINATION lib/)
+install(TARGETS gtest gtest_main ARCHIVE DESTINATION lib)
 install(FILES ${gtest_public_hdrs} DESTINATION include/gtest)
 install(FILES ${gtest_internal_hdrs} DESTINATION include/gtest/internal)
 install(DIRECTORY ${PROJECT_BINARY_DIR}/Debug/

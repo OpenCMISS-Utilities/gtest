@@ -238,3 +238,33 @@ if (gtest_build_tests)
   cxx_executable(gtest_xml_output_unittest_ test gtest)
   py_test(gtest_xml_output_unittest)
 endif()
+
+set(gtest_public_hdrs
+  include/gtest/gtest-death-test.h
+  include/gtest/gtest-message.h
+  include/gtest/gtest-param-test.h
+  include/gtest/gtest-param-test.h.pump
+  include/gtest/gtest-printers.h
+  include/gtest/gtest-spi.h
+  include/gtest/gtest-test-part.h
+  include/gtest/gtest-typed-test.h
+  include/gtest/gtest.h
+  include/gtest/gtest_pred_impl.h
+  include/gtest/gtest_prod.h)
+
+set(gtest_internal_hdrs
+  include/gtest/internal/gtest-death-test-internal.h
+  include/gtest/internal/gtest-filepath.h
+  include/gtest/internal/gtest-internal.h
+  include/gtest/internal/gtest-linked_ptr.h
+  include/gtest/internal/gtest-param-util-generated.h
+  include/gtest/internal/gtest-param-util.h
+  include/gtest/internal/gtest-port.h
+  include/gtest/internal/gtest-string.h
+  include/gtest/internal/gtest-tuple.h
+  include/gtest/internal/gtest-type-util.h)
+
+install(TARGETS gtest gtest_main ARCHIVE DESTINATION lib/)
+install(FILES ${gtest_public_hdrs} DESTINATION include/gtest)
+install(FILES ${gtest_internal_hdrs} DESTINATION include/gtest/internal)
+

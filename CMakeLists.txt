@@ -239,6 +239,18 @@ if (gtest_build_tests)
   py_test(gtest_xml_output_unittest)
 endif()
 
+if(APPLE)
+  exec_program(uname ARGS -v  OUTPUT_VARIABLE DARWIN_VERSION)
+  string(REGEX MATCH "[0-9]+" DARWIN_VERSION ${DARWIN_VERSION})
+  #message(STATUS "DARWIN_VERSION=${DARWIN_VERSION}")
+  #DARWIN version 13 = Mac 0SX 10.9
+  if(DARWIN_VERSION GREATER 12)
+    add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=1)
+  endif ()
+endif()
+
+set_target_properties(gtest gtest_main PROPERTIES DEBUG_POSTFIX "d")
+
 set(gtest_public_hdrs
   include/gtest/gtest-death-test.h
   include/gtest/gtest-message.h

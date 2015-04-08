@@ -5,9 +5,10 @@
 # ctest.  You can select which tests to run using 'ctest -R regex'.
 # For more options, run 'ctest --help'.
 
-# BUILD_SHARED_LIBS is a standard CMake variable, but we declare it here to
-# make it prominent in the GUI.
-option(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." OFF)
+option(BUILD_TESTS "${PROJECT_NAME} - Build tests" ON)
+if (NOT PACKAGE_CONFIG_DIR)
+    set(PACKAGE_CONFIG_DIR "lib/cmake" CACHE STRING "Directory for package config files (relative to CMAKE_INSTALL_PREFIX)")
+endif()
 
 # When other libraries are using a shared version of runtime libraries,
 # Google Test also has to use one.
@@ -16,7 +17,7 @@ option(
   "Use shared (DLL) run-time lib even when Google Test is built as static lib."
   OFF)
 
-option(gtest_build_tests "Build all of gtest's own tests." OFF)
+SET(gtest_build_tests BUILD_TESTS)
 
 option(gtest_build_samples "Build gtest's sample programs." OFF)
 
@@ -39,8 +40,8 @@ endif()
 # as ${gtest_SOURCE_DIR} and to the root binary directory as
 # ${gtest_BINARY_DIR}.
 # Language "C" is required for find_package(Threads).
-project(gtest CXX C)
-cmake_minimum_required(VERSION 2.6.2)
+cmake_minimum_required(VERSION 3.0)
+project(gtest LANGUAGES CXX C VERSION 1.7.0)
 
 if (COMMAND set_up_hermetic_build)
   set_up_hermetic_build()
@@ -250,3 +251,14 @@ if (gtest_build_tests)
   cxx_executable(gtest_xml_output_unittest_ test gtest)
   py_test(gtest_xml_output_unittest)
 endif()
+
+install(TARGETS gtest gtest_main EXPORT gtest-config
+    DESTINATION bin
+    INCLUDES DESTINATION include)
+install(EXPORT gtest-config DESTINATION ${PACKAGE_CONFIG_DIR})   
+include(CMakePackageConfigHelpers)
+WRITE_BASIC_PACKAGE_VERSION_FILE(${CMAKE_CURRENT_BINARY_DIR}/gtest-config-version.cmake
+    COMPATIBILITY AnyNewerVersion)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gtest-config-version.cmake DESTINATION ${PACKAGE_CONFIG_DIR})
+file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/gtest/*.h)
+install(FILES ${HEADERS} DESTINATION include)

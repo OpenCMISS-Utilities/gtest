@@ -252,7 +252,7 @@ if (gtest_build_tests)
   py_test(gtest_xml_output_unittest)
 endif()
 
-install(TARGETS gtest gtest_main EXPORT gtest-config
+install(TARGETS gtest EXPORT gtest-config
     DESTINATION bin
     INCLUDES DESTINATION include)
 install(EXPORT gtest-config DESTINATION ${PACKAGE_CONFIG_DIR})   
@@ -260,5 +260,6 @@ include(CMakePackageConfigHelpers)
 WRITE_BASIC_PACKAGE_VERSION_FILE(${CMAKE_CURRENT_BINARY_DIR}/gtest-config-version.cmake
     COMPATIBILITY AnyNewerVersion)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gtest-config-version.cmake DESTINATION ${PACKAGE_CONFIG_DIR})
-file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/gtest/*.h)
-install(FILES ${HEADERS} DESTINATION include)
+#file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/gtest/*.h)
+#install(FILES ${HEADERS} DESTINATION include/gtest/)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/gtest DESTINATION include)

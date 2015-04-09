@@ -252,7 +252,7 @@ if (gtest_build_tests)
   py_test(gtest_xml_output_unittest)
 endif()
 
-install(TARGETS gtest EXPORT gtest-config
+install(TARGETS gtest gtest_main EXPORT gtest-config
     DESTINATION bin
     INCLUDES DESTINATION include)
 install(EXPORT gtest-config DESTINATION ${PACKAGE_CONFIG_DIR})   

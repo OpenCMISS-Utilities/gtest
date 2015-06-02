@@ -72,6 +72,10 @@ cxx_library(gtest "${cxx_strict}" src/gtest-all.cc)
 cxx_library(gtest_main "${cxx_strict}" src/gtest_main.cc)
 target_link_libraries(gtest_main gtest)
 
+#if (WIN32)
+#    target_compile_definitions(gtest PUBLIC _MSC_VER)
+#endif()
+
 ########################################################################
 #
 # Samples on how to link user tests with gtest or gtest_main.

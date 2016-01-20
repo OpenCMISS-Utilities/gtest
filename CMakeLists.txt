@@ -5,7 +5,6 @@
 # ctest.  You can select which tests to run using 'ctest -R regex'.
 # For more options, run 'ctest --help'.
 
-option(BUILD_TESTS "${PROJECT_NAME} - Build tests" ON)
 if (NOT PACKAGE_CONFIG_DIR)
     set(PACKAGE_CONFIG_DIR "lib/cmake" CACHE STRING "Directory for package config files (relative to CMAKE_INSTALL_PREFIX)")
 endif()
@@ -16,8 +15,6 @@ option(
   gtest_force_shared_crt
   "Use shared (DLL) run-time lib even when Google Test is built as static lib."
   OFF)
-
-SET(gtest_build_tests BUILD_TESTS)
 
 option(gtest_build_samples "Build gtest's sample programs." OFF)
 
@@ -42,6 +39,12 @@ endif()
 # Language "C" is required for find_package(Threads).
 cmake_minimum_required(VERSION 3.0)
 project(gtest LANGUAGES CXX C VERSION 1.7.0)
+
+option(BUILD_TESTS "${PROJECT_NAME} - Build tests" ON)
+if (MINGW)
+    set(BUILD_TESTS OFF)
+endif()
+set(gtest_build_tests ${BUILD_TESTS})
 
 if (COMMAND set_up_hermetic_build)
   set_up_hermetic_build()

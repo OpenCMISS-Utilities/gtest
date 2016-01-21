@@ -41,7 +41,7 @@ cmake_minimum_required(VERSION 3.0)
 project(gtest LANGUAGES CXX C VERSION 1.7.0)
 
 option(BUILD_TESTS "${PROJECT_NAME} - Build tests" ON)
-if (MINGW)
+if (WIN32)
     set(BUILD_TESTS OFF)
 endif()
 set(gtest_build_tests ${BUILD_TESTS})

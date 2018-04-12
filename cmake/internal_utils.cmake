@@ -71,6 +71,8 @@ macro(config_compiler_and_linker)
     set(cxx_exception_flags "-EHsc -D_HAS_EXCEPTIONS=1")
     set(cxx_no_exception_flags "-D_HAS_EXCEPTIONS=0")
     set(cxx_no_rtti_flags "-GR-")
+    # Suppress some Microsoft rubbish
+    set(cxx_base_flags "${cxx_base_flags} -D_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING")
   elseif (CMAKE_COMPILER_IS_GNUCXX)
     set(cxx_base_flags "-Wall -Wshadow")
     set(cxx_exception_flags "-fexceptions")
